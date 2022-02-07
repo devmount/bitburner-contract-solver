@@ -9,7 +9,7 @@
 body {
 	background: var(--c-background);
 	color: var(--c-text);
-	max-width: 500px;
+	max-width: 560px;
 	display: flex;
 	flex-direction: column;
 	margin: 0 auto;

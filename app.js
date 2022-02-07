@@ -7,7 +7,7 @@ const result = document.querySelector('#result');
 // empty task input and result on type change and set placeholder
 typeSelect.addEventListener('change', (e) => {
 	taskInput.value = '';
-	const placeholder = db[e.target.value].example ? 'e.g.:\n' + db[e.target.value].example : 'Insert task input here';
+	const placeholder = db[e.target.value].example ? 'e.g.:\n\n' + db[e.target.value].example : 'Insert task input here';
 	taskInput.setAttribute('placeholder', placeholder);
 	result.innerText = '';
 });
@@ -372,7 +372,7 @@ let db = {
 				}
 			}
 			dfs(0, 0, left, right, data, "", res);
-			return res;
+			return '[' + res + ']';
 		},
 	},
 	validMath: {

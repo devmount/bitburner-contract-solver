@@ -4,9 +4,11 @@ const taskInput = document.querySelector('#task');
 const trigger = document.querySelector('#trigger');
 const result = document.querySelector('#result');
 
-// empty task input and result on type change
-typeSelect.addEventListener('change', () => {
+// empty task input and result on type change and set placeholder
+typeSelect.addEventListener('change', (e) => {
 	taskInput.value = '';
+	const placeholder = db[e.target.value].example ? 'e.g.:\n' + db[e.target.value].example : 'Insert task input here';
+	taskInput.setAttribute('placeholder', placeholder);
 	result.innerText = '';
 });
 // solve task on trigger click
@@ -20,6 +22,7 @@ trigger.addEventListener('click', () => {
 let db = {
 	largestPrime: {
 		name: "Find Largest Prime Factor",
+		example: "335045386",
 		solver: (data) => {
 			let fac = 2;
 			let n = data;
@@ -34,6 +37,7 @@ let db = {
 	},
 	maxSum: {
 		name: "Subarray with Maximum Sum",
+		example: "",
 		solver: (data) => {
 			const nums = data.slice();
 			for (let i = 1; i < nums.length; i++) {
@@ -44,6 +48,7 @@ let db = {
 	},
 	waysToSum: {
 		name: "Total Ways to Sum",
+		example: "",
 		solver: (data) => {
 			const ways = [1];
 			ways.length = data + 1;
@@ -59,6 +64,7 @@ let db = {
 	},
 	spiraliceMatrix: {
 		name: "Spiralize Matrix",
+		example: "[4,31,7,47,23,13,35,30,12,22,28]\n[19,46,7,11,29,23,2,48,45,40,46]\n[25,24,44,33,43,2,15,5,14,9,4]\n[42,35,16,13,44,33,27,50,47,5,37]\n...",
 		solver: (data) => {
 			let temp = []
 			data.split('\n').map(l => temp.push(JSON.parse(l)));
@@ -113,6 +119,7 @@ let db = {
 	},
 	arrayJump: {
 		name: "Array Jumping Game",
+		example: "",
 		solver: (data) => {
 			data = data.split(',');
 			const n = data.length;
@@ -125,6 +132,7 @@ let db = {
 	},
 	mergeOverlappingIntervals: {
 		name: "Merge Overlapping Intervals",
+		example: "",
 		solver: (data) => {
 			const intervals = data.slice();
 			intervals.sort((a, b) => {
@@ -148,6 +156,7 @@ let db = {
 	},
 	generateIp: {
 		name: "Generate IP Addresses",
+		example: "16323010389",
 		solver: (data) => {
 			const ret = [];
 			for (let a = 1; a <= 3; ++a) {
@@ -175,6 +184,7 @@ let db = {
 	},
 	stockTrader1: {
 		name: "Algorithmic Stock Trader I",
+		example: "",
 		solver: (data) => {
 			let maxCur = 0;
 			let maxSoFar = 0;
@@ -187,6 +197,7 @@ let db = {
 	},
 	stockTrader2: {
 		name: "Algorithmic Stock Trader II",
+		example: "[66,60,200,158,70,196,29,...]",
 		solver: (data) => {
 			let profit = 0;
 			for (let p = 1; p < data.length; ++p) {
@@ -197,6 +208,7 @@ let db = {
 	},
 	stockTrader3: {
 		name: "Algorithmic Stock Trader III",
+		example: "[86,126,188,85,112,77,39,69,...]",
 		solver: (data) => {
 			data = data.split(',').map(n => parseInt(n));
 			let hold1 = Number.MIN_SAFE_INTEGER;
@@ -215,6 +227,7 @@ let db = {
 	},
 	stockTrader4: {
 		name: "Algorithmic Stock Trader IV",
+		example: "[6, [88,13,160,50,76,136,96,23,72,25,34,73,118]]",
 		solver: (data) => {
 			data = JSON.parse(data);
 			const k = data[0];
@@ -251,6 +264,7 @@ let db = {
 	},
 	minTrianglePath: {
 		name: "Minimum Path Sum in a Triangle",
+		example: "",
 		solver: (data) => {
 			data = JSON.parse(data);
 			const n = data.length;
@@ -265,6 +279,7 @@ let db = {
 	},
 	uniqueGridPaths1: {
 		name: "Unique Paths in a Grid I",
+		example: "",
 		solver: (data) => {
 			const n = data[0]; // Number of rows
 			const m = data[1]; // Number of columns
@@ -283,6 +298,7 @@ let db = {
 	},
 	uniqueGridPaths2: {
 		name: "Unique Paths in a Grid II",
+		example: "[[0,0,0,0,0,0,0,0],[0,0,0,0,1,0,1,0],[0,0,1,0,1,0,0,0],...]",
 		solver: (data) => {
 			let temp = [];
 			data.split('\n').map(l => temp.push(l.slice(0,-1).split(',')));
@@ -308,6 +324,7 @@ let db = {
 	},
 	sanitizeParantheses: {
 		name: "Sanitize Parentheses in Expression",
+		example: "((()(()((aa())",
 		solver: (data) => {
 			let left = 0;
 			let right = 0;
@@ -360,6 +377,7 @@ let db = {
 	},
 	validMath: {
 		name: "Find All Valid Math Expressions",
+		example: "",
 		solver: (data) => {
 			const num = data[0];
 			const target = data[1];

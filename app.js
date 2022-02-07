@@ -9,7 +9,7 @@ typeSelect.addEventListener('change', (e) => {
 	taskInput.value = '';
 	const placeholder = e.target.value && db[e.target.value].example
 		? 'e.g.:\n\n' + db[e.target.value].example
-		: 'Insert task input here';
+		: 'Insert task input data here';
 	taskInput.setAttribute('placeholder', placeholder);
 	result.innerText = '';
 });
@@ -17,10 +17,13 @@ typeSelect.addEventListener('change', (e) => {
 trigger.addEventListener('click', () => {
 	const type = typeSelect.value;
 	const task = taskInput.value;
-	result.innerText = db[type].solver(task);
+	if (type) {
+		result.innerText = db[type].solver(task);
+	}
 });
 
 // list of solver per type
+// based on https://github.com/danielyxie/bitburner/blob/master/src/data/codingcontracttypes.ts
 let db = {
 	largestPrime: {
 		name: "Find Largest Prime Factor",
@@ -68,9 +71,7 @@ let db = {
 		name: "Spiralize Matrix",
 		example: "[4,31,7,47,23,13,35,30,12,22,28]\n[19,46,7,11,29,23,2,48,45,40,46]\n[25,24,44,33,43,2,15,5,14,9,4]\n[42,35,16,13,44,33,27,50,47,5,37]\n...",
 		solver: (data) => {
-			let temp = []
-			data.split('\n').map(l => temp.push(JSON.parse(l)));
-			data = temp;
+			data = data.split('\n').map(l => JSON.parse(l));
 			const spiral = [];
 			const m = data.length;
 			const n = data[0].length;
@@ -281,8 +282,9 @@ let db = {
 	},
 	uniqueGridPaths1: {
 		name: "Unique Paths in a Grid I",
-		example: "",
+		example: "[9, 14]",
 		solver: (data) => {
+			data = JSON.parse(data);
 			const n = data[0]; // Number of rows
 			const m = data[1]; // Number of columns
 			const currentRow = [];
@@ -302,9 +304,7 @@ let db = {
 		name: "Unique Paths in a Grid II",
 		example: "[[0,0,0,0,0,0,0,0],[0,0,0,0,1,0,1,0],...]",
 		solver: (data) => {
-			let temp = [];
-			data.split('\n').map(l => temp.push(l.slice(0,-1).split(',')));
-			data = temp;
+			data = data.split('\n').map(l => l.slice(0,-1).split(','));
 			const obstacleGrid = [];
 			obstacleGrid.length = data.length;
 			for (let i = 0; i < obstacleGrid.length; ++i) {

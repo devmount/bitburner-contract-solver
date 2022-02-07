@@ -9,18 +9,24 @@
 </head>
 <body>
 	<header>
-		<h1>BitBurner Contract Solver</h1>
+		<h1>Bitburner Contract Solver</h1>
 	</header>
 	<main>
 		<select name="type" id="type">
 			<option value="" disable>Choose task &hellip;</option>
 		</select>
-		<textarea name="task" id="task" cols="50" rows="10" placeholder="Insert task input here"></textarea>
+		<textarea name="task" id="task" cols="50" rows="10" placeholder="Insert task input data here"></textarea>
 		<button id="trigger">&gt; Solve</button>
-		<div id="result"></div>
+		<div id="result" class="content"></div>
 	</main>
 	<footer>
-		Created from <a href="https://github.com/danielyxie/bitburner/blob/master/src/data/codingcontracttypes.ts" target="_blenk">codingcontracttypes.ts</a>
+		<p>
+			Created by <a href="https://github.com/devmount">@devmount</a>
+			for <a href="https://danielyxie.github.io/bitburner/" target="_blank">Bitburner</a> players
+		</p>
+		<p class="text-gray">
+			Based on <a href="https://github.com/danielyxie/bitburner/blob/master/src/data/codingcontracttypes.ts">codingcontracttypes.ts</a>
+		</p>
 	</footer>
 	<script src="./app.js"></script>
 </body>

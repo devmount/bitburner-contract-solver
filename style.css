@@ -1,0 +1,27 @@
+body {
+	background: #0D1117;
+	color: #C9D1D9;
+	max-width: 500px;
+	display: flex;
+	flex-direction: column;
+	margin: 0 auto;
+	gap: 1rem;
+	font-family: 'Fira Mono', monospace;
+	font-size: 16px;
+}
+main {
+	display: flex;
+	flex-direction: column;
+	gap: .5rem;
+}
+select, textarea, button {
+	font-family: 'Fira Mono', monospace;
+	font-size: 16px;
+	background: #21262D;
+	color: #C9D1D9;
+	padding: 1rem;
+	border: none;
+}
+#result {
+	word-break: break-all;
+}

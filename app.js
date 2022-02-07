@@ -170,7 +170,7 @@ let db = {
 					}
 				}
 			}
-			return ret;
+			return '[' + ret.join(',') + ']';
 		},
 	},
 	stockTrader1: {

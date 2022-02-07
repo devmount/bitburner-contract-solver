@@ -1,12 +1,20 @@
+:root {
+	--c-background: #0D1117;
+	--c-background-accent: #21262D;
+	--c-border: #30363d;
+	--c-text: #C9D1D9;
+	--c-font-stack: 'Fira Mono', Consolas, 'Courier New', Courier, monospace, 'Times New Roman';
+}
+
 body {
-	background: #0D1117;
-	color: #C9D1D9;
+	background: var(--c-background);
+	color: var(--c-text);
 	max-width: 500px;
 	display: flex;
 	flex-direction: column;
 	margin: 0 auto;
 	gap: 1rem;
-	font-family: 'Fira Mono', monospace;
+	font-family: var(--c-font-stack);
 	font-size: 16px;
 }
 main {
@@ -15,13 +23,15 @@ main {
 	gap: .5rem;
 }
 select, textarea, button {
-	font-family: 'Fira Mono', monospace;
+	font-family: var(--c-font-stack);
 	font-size: 16px;
-	background: #21262D;
-	color: #C9D1D9;
+	background: var(--c-background-accent);
+	color: var(--c-text);
 	padding: 1rem;
-	border: none;
+	border: 1px solid var(--c-border);
 }
 #result {
 	word-break: break-all;
+	padding: 1rem;
+	border: 1px solid var(--c-border);
 }

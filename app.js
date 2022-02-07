@@ -298,7 +298,7 @@ let db = {
 	},
 	uniqueGridPaths2: {
 		name: "Unique Paths in a Grid II",
-		example: "[[0,0,0,0,0,0,0,0],[0,0,0,0,1,0,1,0],[0,0,1,0,1,0,0,0],...]",
+		example: "[[0,0,0,0,0,0,0,0],[0,0,0,0,1,0,1,0],...]",
 		solver: (data) => {
 			let temp = [];
 			data.split('\n').map(l => temp.push(l.slice(0,-1).split(',')));
@@ -423,3 +423,12 @@ let db = {
 		},
 	},
 };
+
+// initially load all task types
+for (const type in db) {
+	const { name } = db[type];
+	let option = document.createElement("option");
+	option.value = type;
+	option.innerText = name;
+	typeSelect.append(option);
+}

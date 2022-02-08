@@ -122,7 +122,7 @@ let db = {
 	},
 	arrayJump: {
 		name: "Array Jumping Game",
-		example: "",
+		example: "2,0,7,5,7,5,0,10,0,6,0,8,0,4,1,7,10",
 		solver: (data) => {
 			data = data.split(',');
 			const n = data.length;
@@ -200,8 +200,9 @@ let db = {
 	},
 	stockTrader2: {
 		name: "Algorithmic Stock Trader II",
-		example: "[66,60,200,158,70,196,29,...]",
+		example: "66,60,200,158,70,196,29,...",
 		solver: (data) => {
+			data = data.split(',').map(n => parseInt(n));
 			let profit = 0;
 			for (let p = 1; p < data.length; ++p) {
 				profit += Math.max(data[p] - data[p - 1], 0);
@@ -211,7 +212,7 @@ let db = {
 	},
 	stockTrader3: {
 		name: "Algorithmic Stock Trader III",
-		example: "[86,126,188,85,112,77,39,69,...]",
+		example: "86,126,188,85,112,77,39,69,...",
 		solver: (data) => {
 			data = data.split(',').map(n => parseInt(n));
 			let hold1 = Number.MIN_SAFE_INTEGER;
@@ -302,7 +303,7 @@ let db = {
 	},
 	uniqueGridPaths2: {
 		name: "Unique Paths in a Grid II",
-		example: "[[0,0,0,0,0,0,0,0],[0,0,0,0,1,0,1,0],...]",
+		example: "0,0,0,0,0,0,0,1,0,0,1,0,\n1,0,0,0,0,0,0,0,0,1,0,0,\n...",
 		solver: (data) => {
 			data = data.split('\n').map(l => l.slice(0,-1).split(','));
 			const obstacleGrid = [];

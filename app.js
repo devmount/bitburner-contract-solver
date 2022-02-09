@@ -135,8 +135,9 @@ let db = {
 	},
 	mergeOverlappingIntervals: {
 		name: "Merge Overlapping Intervals",
-		example: "",
+		example: "[[23,30],[5,10],[9,19],[9,12],[11,20],...]",
 		solver: (data) => {
+			data = JSON.parse(data);
 			const intervals = data.slice();
 			intervals.sort((a, b) => {
 				return a[0] - b[0];
@@ -154,7 +155,7 @@ let db = {
 				}
 			}
 			result.push([start, end]);
-			return convert2DArrayToString(result);
+			return '[' + result.map(e => '[' + e.join(',') + ']').join(',') + ']';
 		},
 	},
 	generateIp: {

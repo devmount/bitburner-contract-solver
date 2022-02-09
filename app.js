@@ -53,7 +53,7 @@ let db = {
 	},
 	waysToSum: {
 		name: "Total Ways to Sum",
-		example: "",
+		example: "37",
 		solver: (data) => {
 			const ways = [1];
 			ways.length = data + 1;
@@ -187,8 +187,9 @@ let db = {
 	},
 	stockTrader1: {
 		name: "Algorithmic Stock Trader I",
-		example: "",
+		example: "184,173,9,22,194,2,99,141,145,18,30,189,54,43,3,14,...",
 		solver: (data) => {
+			data = data.split(',').map(n => parseInt(n));
 			let maxCur = 0;
 			let maxSoFar = 0;
 			for (let i = 1; i < data.length; ++i) {
@@ -380,8 +381,9 @@ let db = {
 	},
 	validMath: {
 		name: "Find All Valid Math Expressions",
-		example: "",
+		example: "['35474004', 82]",
 		solver: (data) => {
+			data = JSON.parse(data);
 			const num = data[0];
 			const target = data[1];
 
@@ -422,7 +424,7 @@ let db = {
 
 			const result = [];
 			helper(result, "", num, target, 0, 0, 0);
-			return result;
+			return '[' + result + ']';
 		},
 	},
 };

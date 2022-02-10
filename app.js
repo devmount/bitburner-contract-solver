@@ -42,8 +42,9 @@ let db = {
 	},
 	maxSum: {
 		name: "Subarray with Maximum Sum",
-		example: "",
+		example: "-9,3,8,-3,8,-9,-7,7,8,-8,...",
 		solver: (data) => {
+			data = data.split(',').map(n => parseInt(n));
 			const nums = data.slice();
 			for (let i = 1; i < nums.length; i++) {
 				nums[i] = Math.max(nums[i], nums[i] + nums[i - 1]);
@@ -124,7 +125,7 @@ let db = {
 		name: "Array Jumping Game",
 		example: "2,0,7,5,7,5,0,10,0,6,0,8,0,4,1,7,10",
 		solver: (data) => {
-			data = data.split(',');
+			data = data.split(',').map(n => parseInt(n));
 			const n = data.length;
 			let i = 0;
 			for (let reach = 0; i < n && i <= reach; ++i) {

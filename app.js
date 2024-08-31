@@ -21,11 +21,15 @@ trigger.addEventListener('click', () => {
 		result.innerText = db[type].solver(task);
 	}
 });
+// copy result when clicking the result area
+result.addEventListener('click', () => {
+	navigator.clipboard.writeText(result.innerText);
+});
 
 // list of solver per type
-// based on https://github.com/danielyxie/bitburner/blob/master/src/data/codingcontracttypes.ts
+// based on https://github.com/bitburner-official/bitburner-src/blob/dev/src/data/codingcontracttypes.ts
 let db = {
-	largestPrime: {
+	findLargestPrimeFactor: {
 		name: "Find Largest Prime Factor",
 		example: "335045386",
 		solver: (data) => {
@@ -40,7 +44,7 @@ let db = {
 			return (n === 1 ? fac - 1 : n);
 		},
 	},
-	maxSum: {
+	subarrayWithMaximumSum: {
 		name: "Subarray with Maximum Sum",
 		example: "-9,3,8,-3,8,-9,-7,7,8,-8,...",
 		solver: (data) => {
@@ -52,7 +56,7 @@ let db = {
 			return Math.max(...nums);
 		},
 	},
-	waysToSum: {
+	totalWaysToSum: {
 		name: "Total Ways to Sum",
 		example: "37",
 		solver: (data) => {
@@ -68,7 +72,26 @@ let db = {
 			return ways[data];
 		},
 	},
-	spiraliceMatrix: {
+	totalWaysToSumIi: {
+		name: "Total Ways to Sum II",
+		example: "15 1,2,3,4,7,8,10,11,14",
+		solver: (data) => {
+			data = data.split(' ');
+			// https://www.geeksforgeeks.org/coin-change-dp-7/?ref=lbp
+			const n = data[0];
+			const s = data[1].split(',').map(n => parseInt(n));
+			const ways = [1];
+			ways.length = n + 1;
+			ways.fill(0, 1);
+			for (let i = 0; i < s.length; i++) {
+				for (let j = s[i]; j <= n; j++) {
+					ways[j] += ways[j - s[i]];
+				}
+			}
+			return ways[n];
+		},
+	},
+	spiralizeMatrix: {
 		name: "Spiralize Matrix",
 		example: "[4,31,7,47,23,13,35,30,12,22,28]\n[19,46,7,11,29,23,2,48,45,40,46]\n[25,24,44,33,43,2,15,5,14,9,4]\n[42,35,16,13,44,33,27,50,47,5,37]\n...",
 		solver: (data) => {
@@ -81,14 +104,16 @@ let db = {
 			let l = 0;
 			let r = n - 1;
 			let k = 0;
-			while (true) {
+			let done = false;
+			while (!done) {
 				// Up
 				for (let col = l; col <= r; col++) {
 					spiral[k] = data[u][col];
 					++k;
 				}
 				if (++u > d) {
-					break;
+					done = true;
+					continue;
 				}
 
 				// Right
@@ -97,7 +122,8 @@ let db = {
 					++k;
 				}
 				if (--r < l) {
-					break;
+					done = true;
+					continue;
 				}
 
 				// Down
@@ -106,7 +132,8 @@ let db = {
 					++k;
 				}
 				if (--d < u) {
-					break;
+					done = true;
+					continue;
 				}
 
 				// Left
@@ -115,13 +142,14 @@ let db = {
 					++k;
 				}
 				if (++l > r) {
-					break;
+					done = true;
+					continue;
 				}
 			}
 			return '[' + spiral + ']';
 		},
 	},
-	arrayJump: {
+	arrayJumpingGame: {
 		name: "Array Jumping Game",
 		example: "2,0,7,5,7,5,0,10,0,6,0,8,0,4,1,7,10",
 		solver: (data) => {
@@ -132,6 +160,33 @@ let db = {
 				reach = Math.max(i + data[i], reach);
 			}
 			return i === n;
+		},
+	},
+	arrayJumpingGameIi: {
+		name: "Array Jumping Game II",
+		example: "2,1,2,1,4,6,3",
+		solver: (data) => {
+			data = data.split(',').map(n => parseInt(n));
+			const n = data.length;
+			let reach = 0;
+			let jumps = 0;
+			let lastJump = -1;
+			while (reach < n - 1) {
+				let jumpedFrom = -1;
+				for (let i = reach; i > lastJump; i--) {
+					if (i + data[i] > reach) {
+						reach = i + data[i];
+						jumpedFrom = i;
+					}
+				}
+				if (jumpedFrom === -1) {
+					jumps = 0;
+					break;
+				}
+				lastJump = jumpedFrom;
+				jumps++;
+			}
+			return jumps;
 		},
 	},
 	mergeOverlappingIntervals: {
@@ -156,10 +211,10 @@ let db = {
 				}
 			}
 			result.push([start, end]);
-			return '[' + result.map(e => '[' + e.join(',') + ']').join(',') + ']';
+			return convert2DArrayToString(result);
 		},
 	},
-	generateIp: {
+	generateIpAddresses: {
 		name: "Generate IP Addresses",
 		example: "16323010389",
 		solver: (data) => {
@@ -187,7 +242,7 @@ let db = {
 			return '[' + ret.join(',') + ']';
 		},
 	},
-	stockTrader1: {
+	algorithmicStockTraderI: {
 		name: "Algorithmic Stock Trader I",
 		example: "184,173,9,22,194,2,99,141,145,18,30,189,54,43,3,14,...",
 		solver: (data) => {
@@ -201,7 +256,7 @@ let db = {
 			return maxSoFar.toString();
 		},
 	},
-	stockTrader2: {
+	algorithmicStockTraderIi: {
 		name: "Algorithmic Stock Trader II",
 		example: "66,60,200,158,70,196,29,...",
 		solver: (data) => {
@@ -213,7 +268,7 @@ let db = {
 			return profit.toString();
 		},
 	},
-	stockTrader3: {
+	algorithmicStockTraderIii: {
 		name: "Algorithmic Stock Trader III",
 		example: "86,126,188,85,112,77,39,69,...",
 		solver: (data) => {
@@ -232,7 +287,7 @@ let db = {
 			return release2.toString();
 		},
 	},
-	stockTrader4: {
+	algorithmicStockTraderIv: {
 		name: "Algorithmic Stock Trader IV",
 		example: "[6, [88,13,160,50,76,136,96,23,72,25,34,73,118]]",
 		solver: (data) => {
@@ -269,9 +324,9 @@ let db = {
 			return rele[k];
 		},
 	},
-	minTrianglePath: {
+	minimumPathSumInATriangle: {
 		name: "Minimum Path Sum in a Triangle",
-		example: "",
+		example: "[\n     [1],\n    [6,7],\n   [9,4,6],\n  [7,2,2,4],\n [9,8,2,5,5],\n]",
 		solver: (data) => {
 			data = JSON.parse(data);
 			const n = data.length;
@@ -284,7 +339,7 @@ let db = {
 			return dp[0];
 		},
 	},
-	uniqueGridPaths1: {
+	uniquePathsInAGridI: {
 		name: "Unique Paths in a Grid I",
 		example: "[9, 14]",
 		solver: (data) => {
@@ -304,7 +359,7 @@ let db = {
 			return currentRow[n - 1];
 		},
 	},
-	uniqueGridPaths2: {
+	uniquePathsInAGridIi: {
 		name: "Unique Paths in a Grid II",
 		example: "0,0,0,0,0,0,0,1,0,0,1,0,\n1,0,0,0,0,0,0,0,0,1,0,0,\n...",
 		solver: (data) => {
@@ -328,7 +383,59 @@ let db = {
 			return obstacleGrid[obstacleGrid.length - 1][obstacleGrid[0].length - 1];
 		},
 	},
-	sanitizeParantheses: {
+	shortestPathInAGrid: {
+		name: "Shortest Path in a Grid",
+		example: "[[0,1,0,0,0],\n [0,0,0,1,0]]",
+		solver: (data) => {
+			data = JSON.parse(data);
+			const width = data[0].length;
+			const height = data.length;
+			const dstY = height - 1;
+			const dstX = width - 1;
+
+			const distance = new Array(height);
+			//const prev: [[number, number] | undefined][] = new Array(height);
+			const queue = [];
+
+			for (let y = 0; y < height; y++) {
+				distance[y] = new Array(width).fill(Infinity);
+				//prev[y] = new Array(width).fill(undefined) as [undefined];
+			}
+
+			function validPosition(y, x) {
+				return y >= 0 && y < height && x >= 0 && x < width && data[y][x] == 0;
+			}
+
+			// List in-bounds and passable neighbors
+			function* neighbors(y, x) {
+				if (validPosition(y - 1, x)) yield [y - 1, x]; // Up
+				if (validPosition(y + 1, x)) yield [y + 1, x]; // Down
+				if (validPosition(y, x - 1)) yield [y, x - 1]; // Left
+				if (validPosition(y, x + 1)) yield [y, x + 1]; // Right
+			}
+
+			// Prepare starting point
+			distance[0][0] = 0;
+			queue.push([0, 0]);
+
+			// Take next-nearest position and expand potential paths from there
+			while (queue.length > 0) {
+				const [y, x] = queue.shift();
+				for (const [yN, xN] of neighbors(y, x)) {
+					if (distance[yN][xN] == Infinity) {
+						queue.push([yN, xN]);
+						distance[yN][xN] = distance[y][x] + 1;
+					}
+				}
+			}
+
+			// No path at all?
+			if (distance[dstY][dstX] == Infinity) return '""';
+			
+			return distance.map(d => d.map(n => n == Infinity ? '-' : n).join(' ')).join("\n");
+		},
+	},
+	sanitizeParenthesesInExpression: {
 		name: "Sanitize Parentheses in Expression",
 		example: "((()(()((aa())",
 		solver: (data) => {
@@ -381,7 +488,7 @@ let db = {
 			return '[' + res + ']';
 		},
 	},
-	validMath: {
+	findAllValidMathExpressions: {
 		name: "Find All Valid Math Expressions",
 		example: "['35474004', 82]",
 		solver: (data) => {
@@ -427,6 +534,102 @@ let db = {
 			const result = [];
 			helper(result, "", num, target, 0, 0, 0);
 			return '[' + result + ']';
+		},
+	},
+	hammingCodesIntegerToEncodedBinary: {
+		name: "HammingCodes: Integer to Encoded Binary",
+		example: "799766358",
+		solver: (data) => {
+			return HammingEncode(Number(data));
+		},
+	},
+	hammingCodesEncodedBinaryToInteger: {
+		name: "HammingCodes: Encoded Binary to Integer",
+		example: "1110101001110100",
+		solver: (data) => {
+			return HammingDecode(data);
+		},
+	},
+	proper2ColoringOfAGraph: {
+		name: "Proper 2-Coloring of a Graph",
+		example: "[4, [[0, 2], [0, 3], [1, 2], [1, 3]]]",
+		solver: (data) => {
+			//Helper function to get neighbourhood of a vertex
+			function neighbourhood(vertex) {
+				const adjLeft = data[1].filter(([a]) => a == vertex).map(([, b]) => b);
+				const adjRight = data[1].filter(([, b]) => b == vertex).map(([a]) => a);
+				return adjLeft.concat(adjRight);
+			}
+
+			data = JSON.parse(data);
+			return 'TODO';
+		},
+	},
+	compressionIRleCompression: {
+		name: "Compression I: RLE Compression",
+		example: "aaaaabccc",
+		solver: (plain) => {
+			let length = 0;
+			let result = '';
+			for (let i = 0; i < plain.length; ) {
+				let run_length = 1;
+				while (i + run_length < plain.length && plain[i + run_length] === plain[i]) {
+					++run_length;
+				}
+				i += run_length;
+				
+				while (run_length > 0) {
+					result += String(run_length > 9 ? 9 : run_length)+plain[i-1];
+					run_length -= 9;
+					length += 2;
+				}
+			}
+
+			return result;
+		},
+	},
+	compressionIILzDecompression: {
+		name: "Compression II: LZ Decompression",
+		example: "5aaabb450723abb",
+		solver: (compr) => {
+			return comprLZDecode(compr);
+		},
+	},
+	compressionIIILzCompression: {
+		name: "Compression III: LZ Compression",
+		example: "abracadabra",
+		solver: (plain) => {
+			return comprLZEncode(plain);
+		},
+	},
+	encryptionICaesarCipher: {
+		name: "Encryption I: Caesar Cipher",
+		example: "[\"FLASH MODEM EMAIL ENTER FRAME\", 8]",
+		solver: (data) => {
+			data = JSON.parse(data);
+			// data = [plaintext, shift value]
+			// build char array, shifting via map and join to final results
+			const cipher = [...data[0]]
+				.map((a) => (a === " " ? a : String.fromCharCode(((a.charCodeAt(0) - 65 - data[1] + 26) % 26) + 65)))
+				.join("");
+			return cipher;
+		},
+	},
+	encryptionIiVigenèreCipher: {
+		name: "Encryption II: Vigenère Cipher",
+		example: "[\"INBOXLOGICLOGINMEDIAMOUSE\", \"COMPUTER\"]",
+		solver: (data) => {
+			data = JSON.parse(data);
+			// data = [plaintext, keyword]
+			// build char array, shifting via map and corresponding keyword letter and join to final results
+			const cipher = [...data[0]]
+				.map((a, i) => {
+					return a === " "
+						? a
+						: String.fromCharCode(((a.charCodeAt(0) - 2 * 65 + data[1].charCodeAt(i % data[1].length)) % 26) + 65);
+				})
+				.join("");
+			return cipher;
 		},
 	},
 };

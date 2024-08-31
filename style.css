@@ -67,6 +67,7 @@ a:hover {
 	padding: 1rem;
 	border: 1px solid var(--c-border);
 	color: var(--c-hack);
+	cursor: pointer;
 }
 
 /* utilities */

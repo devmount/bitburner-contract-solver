@@ -432,7 +432,21 @@ let db = {
 			// No path at all?
 			if (distance[dstY][dstX] == Infinity) return '""';
 			
-			return distance.map(d => d.map(n => n == Infinity ? '-' : n).join(' ')).join("\n");
+			//trace a path back to start
+			let path = ""
+			let [yC, xC] = [dstY, dstX]
+			while (xC != 0 || yC != 0) {
+				const dist = distance[yC][xC];
+				for (const [yF, xF] of neighbors(yC, xC)) {
+					if (distance[yF][xF] == dist - 1) {
+						path = (xC == xF ? (yC == yF + 1 ? "D" : "U") : (xC == xF + 1 ? "R" : "L")) + path;
+						[yC, xC] = [yF, xF]
+						break
+					}
+				}
+			}
+
+			return path;
 		},
 	},
 	sanitizeParenthesesInExpression: {
@@ -554,15 +568,42 @@ let db = {
 		name: "Proper 2-Coloring of a Graph",
 		example: "[4, [[0, 2], [0, 3], [1, 2], [1, 3]]]",
 		solver: (data) => {
-			//Helper function to get neighbourhood of a vertex
-			function neighbourhood(vertex) {
-				const adjLeft = data[1].filter(([a]) => a == vertex).map(([, b]) => b);
-				const adjRight = data[1].filter(([, b]) => b == vertex).map(([a]) => a);
-				return adjLeft.concat(adjRight);
-			}
-
 			data = JSON.parse(data);
-			return 'TODO';
+			// convert from edges to nodes
+			const nodes = new Array(data[0]).fill(0).map(() => [])
+			for (const e of data[1]) {
+				nodes[e[0]].push(e[1])
+				nodes[e[1]].push(e[0])
+			}
+			// solution graph starts out undefined and fills in with 0s and 1s
+			const solution = new Array(data[0]).fill(undefined)
+			let oddCycleFound = false
+			// recursive function for DFS
+			const traverse = (index, color) => {
+				if (oddCycleFound) {
+					// leave immediately if an invalid cycle was found
+					return
+				}
+				if (solution[index] === color) {
+					// node was already hit and is correctly colored
+					return
+				}
+				if (solution[index] === (color ^ 1)) {
+					// node was already hit and is incorrectly colored: graph is uncolorable
+					oddCycleFound = true
+					return
+				}
+				solution[index] = color
+				for (const n of nodes[index]) {
+					traverse(n, color ^ 1)
+				}
+			}
+			// repeat run for as long as undefined nodes are found, in case graph isn't fully connected
+			while (!oddCycleFound && solution.some(e => e === undefined)) {
+				traverse(solution.indexOf(undefined), 0)
+			}
+			if (oddCycleFound) return "[]"; // TODO: Bug #3755 in bitburner requires a string literal. Will this be fixed?
+			return solution;
 		},
 	},
 	compressionIRleCompression: {

@@ -439,7 +439,7 @@ let db = {
 				const dist = distance[yC][xC];
 				for (const [yF, xF] of neighbors(yC, xC)) {
 					if (distance[yF][xF] == dist - 1) {
-						path = (xC == xF ? (yC == yF + 1 ? "D" : "U") : (xC == xF + 1 ? "R" : "L")) + path;;
+						path = (xC == xF ? (yC == yF + 1 ? "D" : "U") : (xC == xF + 1 ? "R" : "L")) + path;
 						[yC, xC] = [yF, xF];
 						break;
 					}

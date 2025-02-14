@@ -6,4 +6,4 @@ Clone this repo and run it locally or check it out here:
 
 <https://devmount.github.io/bitburner-contract-solver/>
 
-This project is based on [codingcontracttypes.ts](https://github.com/bitburner-official/bitburner-src/blob/dev/src/data/codingcontracttypes.ts) - all credits to the original authors of the awesome Bitburners game.
+This project is based on [the corresponding game source](https://github.com/bitburner-official/bitburner-src/blob/dev/src/CodingContract/) - all credits to the original authors of the awesome Bitburners game.

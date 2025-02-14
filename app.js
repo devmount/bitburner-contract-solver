@@ -27,7 +27,7 @@ result.addEventListener('click', () => {
 });
 
 // list of solver per type
-// based on https://github.com/bitburner-official/bitburner-src/blob/dev/src/data/codingcontracttypes.ts
+// based on https://github.com/bitburner-official/bitburner-src/blob/dev/src/CodingContract/
 let db = {
 	findLargestPrimeFactor: {
 		name: "Find Largest Prime Factor",
@@ -431,7 +431,7 @@ let db = {
 
 			// No path at all?
 			if (distance[dstY][dstX] == Infinity) return '""';
-			
+
 			//trace a path back to start
 			let path = "";
 			let [yC, xC] = [dstY, dstX];
@@ -618,7 +618,7 @@ let db = {
 					++run_length;
 				}
 				i += run_length;
-				
+
 				while (run_length > 0) {
 					result += String(run_length > 9 ? 9 : run_length)+plain[i-1];
 					run_length -= 9;
@@ -672,6 +672,46 @@ let db = {
 				.join("");
 			return cipher;
 		},
+	},
+	sqrtBigInt: {
+		name: "Square Root",
+		example: "85027756688728992039343472749973395489496426478679146914594092850470138746682004844846731574411929455787504015372183412744082517126948688460316362207223994823057005387889005747347064036786977021248868",
+		solver: (n) => {
+			if (n < 0n) {
+				return 'ERROR';
+			}
+			if (n === 0n) {
+				return 0n;
+			}
+
+			// Binary search approach
+			let left = 1n;
+			let right = n;
+			let result = 0n;
+
+			while (left <= right) {
+				const mid = (left + right) / 2n;
+				const square = mid * mid;
+
+				if (square === n) {
+					return mid;
+				}
+				else if (square < n) {
+					left = mid + 1n;
+					result = mid; // Keep track of largest number whose square is less than n
+				}
+				else {
+					right = mid - 1n;
+				}
+			}
+
+			// Check if (result + 1)^2 is closer to n
+			const resultPlusOne = result + 1n;
+			const diff1 = n - (result * result);
+			const diff2 = (resultPlusOne * resultPlusOne) - n;
+
+			return diff1 <= diff2 ? result : resultPlusOne;
+		}
 	},
 };
 

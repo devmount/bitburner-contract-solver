@@ -684,33 +684,7 @@ let db = {
 				return 0n;
 			}
 
-			// Binary search approach
-			let left = 1n;
-			let right = n;
-			let result = 0n;
-
-			while (left <= right) {
-				const mid = (left + right) / 2n;
-				const square = mid * mid;
-
-				if (square === n) {
-					return mid;
-				}
-				else if (square < n) {
-					left = mid + 1n;
-					result = mid; // Keep track of largest number whose square is less than n
-				}
-				else {
-					right = mid - 1n;
-				}
-			}
-
-			// Check if (result + 1)^2 is closer to n
-			const resultPlusOne = result + 1n;
-			const diff1 = n - (result * result);
-			const diff2 = (resultPlusOne * resultPlusOne) - n;
-
-			return diff1 <= diff2 ? result : resultPlusOne;
+			return BigInt(BigNumber(n).sqrt().toFixed(0));
 		}
 	},
 };

@@ -1,4 +1,6 @@
-# bitburner-contract-solver
+<img src="./favicon.svg" width="48" alt="Logo showing a light green contract" />
+
+# Bitburner Contract Solver
 
 This is just a little helper to solve the Bitburner contracts for those who haven't fully automated that yet for any reason.
 
